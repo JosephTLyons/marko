@@ -140,3 +140,5 @@ mod tests {
 // Other markdown functions?
 // Clean table function
 // Replace all HashMap []s with .get()
+// Test names - what is the convention?
+// Reduce clones
