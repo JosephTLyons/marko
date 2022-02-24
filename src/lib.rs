@@ -11,8 +11,16 @@ pub fn italicize(text: &str) -> String {
     decorate_text_with(text, "*")
 }
 
+pub fn strike(text: &str) -> String {
+    decorate_text_with(text, "~")
+}
+
 fn decorate_text_with(text: &str, decoration: &str) -> String {
     format!("{}{}{}", decoration, text, decoration)
+}
+
+pub fn divider() -> String {
+    "---".to_string()
 }
 
 pub fn create_formatted_markdown_table(
@@ -68,6 +76,16 @@ mod tests {
     #[test]
     fn italicize_text() {
         assert_eq!("*Dog*".to_string(), italicize("Dog"))
+    }
+
+    #[test]
+    fn strike_text() {
+        assert_eq!("~Dog~".to_string(), strike("Dog"))
+    }
+
+    #[test]
+    fn divider_test() {
+        assert_eq!("---".to_string(), divider())
     }
 
     #[test]
