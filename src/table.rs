@@ -11,7 +11,7 @@ impl<'a> Table<'a> {
         Table { headers, rows }
     }
 
-    pub fn column_width(&self, header: &str) -> usize {
+    pub fn get_column_width(&self, header: &str) -> usize {
         let width_of_largest_non_header_cell_in_column = self
             .rows
             .iter()
@@ -23,11 +23,11 @@ impl<'a> Table<'a> {
         cmp::max(header.len(), width_of_largest_non_header_cell_in_column)
     }
 
-    pub fn column_widths(&self) -> HashMap<String, usize> {
+    pub fn get_column_widths(&self) -> HashMap<String, usize> {
         let column_widths: HashMap<String, usize> = self
             .headers
             .iter()
-            .map(|header| (header.clone(), self.column_width(header)))
+            .map(|header| (header.clone(), self.get_column_width(header)))
             .collect();
 
         column_widths
@@ -56,10 +56,10 @@ mod tests {
 
         let table = Table::from(&headers, &rows);
 
-        let column_width = table.column_width(&"Name".to_string());
+        let column_width = table.get_column_width(&"Name".to_string());
         assert_eq!(column_width, 6);
 
-        let column_width = table.column_width(&"Profession".to_string());
+        let column_width = table.get_column_width(&"Profession".to_string());
         assert_eq!(column_width, 10);
     }
 
@@ -80,7 +80,7 @@ mod tests {
         headers.sort();
 
         let table = Table::from(&headers, &rows);
-        let column_widths = table.column_widths();
+        let column_widths = table.get_column_widths();
 
         assert_eq!(column_widths["Name"], 6);
         assert_eq!(column_widths["Profession"], 10);

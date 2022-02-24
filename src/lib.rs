@@ -35,19 +35,19 @@ pub fn create_formatted_markdown_table_lines(
         return Vec::new();
     }
 
-    let value_pad_map = Table::from(headers, rows).column_widths();
+    let column_widths = Table::from(headers, rows).get_column_widths();
 
     let create_padded_value =
         |value: &String, pad_value: usize| -> String { format!("{:01$}", value, pad_value) };
 
     let padded_headers = headers
         .iter()
-        .map(|header| create_padded_value(header, value_pad_map[header]))
+        .map(|header| create_padded_value(header, column_widths[header]))
         .collect();
 
     let separators: Vec<String> = headers
         .iter()
-        .map(|header| "-".repeat(value_pad_map[header]))
+        .map(|header| "-".repeat(column_widths[header]))
         .collect();
 
     let create_row_string = |row: &Vec<String>| -> String { format!("| {} |", row.join(" | ")) };
@@ -60,7 +60,7 @@ pub fn create_formatted_markdown_table_lines(
     for row in rows {
         let row_values: Vec<String> = headers
             .iter()
-            .map(|header| create_padded_value(&row[header], value_pad_map[header]))
+            .map(|header| create_padded_value(&row[header], column_widths[header]))
             .collect();
         markdown_table_lines.push(create_row_string(&row_values));
     }
