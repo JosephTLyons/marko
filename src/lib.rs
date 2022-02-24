@@ -158,3 +158,4 @@ mod tests {
 // Replace all HashMap []s with .get()
 // Test names - what is the convention?
 // Reduce clones
+// Convert functions to trait of string, so . can be used?
