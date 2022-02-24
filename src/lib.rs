@@ -28,11 +28,15 @@ use table::Table;
 // }
 
 pub fn bold(text: &str) -> String {
-    format!("**{}**", text)
+    decorate_text_with(text, "**")
 }
 
 pub fn italicize(text: &str) -> String {
-    format!("*{}*", text)
+    decorate_text_with(text, "*")
+}
+
+fn decorate_text_with(text: &str, decoration: &str) -> String {
+    format!("{}{}{}", decoration, text, decoration)
 }
 
 pub fn create_formatted_markdown_table(
