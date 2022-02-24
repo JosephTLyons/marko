@@ -27,6 +27,14 @@ use table::Table;
 //     Some(markdown_table_lines)
 // }
 
+pub fn bold(text: &str) -> String {
+    format!("**{}**", text)
+}
+
+pub fn italicize(text: &str) -> String {
+    format!("*{}*", text)
+}
+
 pub fn create_formatted_markdown_table(
     headers: &[String],
     rows: &[HashMap<String, String>],
@@ -71,6 +79,16 @@ pub fn create_formatted_markdown_table(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn bold_text() {
+        assert_eq!("**Dog**".to_string(), bold("Dog"))
+    }
+
+    #[test]
+    fn italicize_text() {
+        assert_eq!("*Dog*".to_string(), italicize("Dog"))
+    }
 
     #[test]
     fn empty_headers() {
