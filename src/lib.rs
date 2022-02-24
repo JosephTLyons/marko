@@ -3,30 +3,6 @@ mod table;
 use std::collections::HashMap;
 use table::Table;
 
-// Convert everything to &str?
-// fn create_markdown_table_lines<T>(rows: &[HashMap<String, T>]) -> Option<Vec<String>>
-// where
-//     T: Clone,
-//     Vec<String>: FromIterator<T>,
-// {
-//     let mut headers: Vec<String> = rows.first()?.keys().cloned().collect();
-//     headers.sort();
-
-//     let separators: Vec<String> = headers.iter().map(|_| "-".to_string()).collect();
-
-//     let create_row_string = |row: &Vec<String>| -> String { format!("| {} |", row.join(" | ")) };
-
-//     let mut markdown_table_lines =
-//         vec![create_row_string(&headers), create_row_string(&separators)];
-
-//     for row in rows {
-//         let row_values: Vec<String> = headers.iter().map(|header| row[header].clone()).collect();
-//         markdown_table_lines.push(create_row_string(&row_values));
-//     }
-
-//     Some(markdown_table_lines)
-// }
-
 pub fn bold(text: &str) -> String {
     decorate_text_with(text, "**")
 }
