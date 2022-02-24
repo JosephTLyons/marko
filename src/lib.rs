@@ -74,7 +74,7 @@ mod tests {
 
     #[test]
     fn empty_headers() {
-        let rows = vec![
+        let rows = [
             HashMap::from([
                 ("Name".to_string(), "Joseph".to_string()),
                 ("Profession".to_string(), "Developer".to_string()),
@@ -85,7 +85,7 @@ mod tests {
             ]),
         ];
 
-        let headers: Vec<String> = Vec::new();
+        let headers = [];
 
         let table_lines = create_formatted_markdown_table_lines(&headers, &rows);
         let expected_output: Vec<String> = Vec::new();
@@ -95,8 +95,8 @@ mod tests {
 
     #[test]
     fn empty_rows() {
-        let rows: Vec<HashMap<String, String>> = Vec::new();
-        let headers: Vec<String> = vec!["Name".to_string(), "Profession".to_string()];
+        let rows = [];
+        let headers = ["Name".to_string(), "Profession".to_string()];
 
         let table_lines = create_formatted_markdown_table_lines(&headers, &rows);
         let expected_output: Vec<String> = Vec::new();
@@ -106,7 +106,7 @@ mod tests {
 
     #[test]
     fn non_empty_table_test() {
-        let rows = vec![
+        let rows = [
             HashMap::from([
                 ("Name".to_string(), "Joseph".to_string()),
                 ("Profession".to_string(), "Developer".to_string()),
@@ -122,7 +122,7 @@ mod tests {
 
         let table_lines = create_formatted_markdown_table_lines(&headers, &rows);
 
-        let expected_output = vec![
+        let expected_output = [
             "| Name   | Profession |".to_string(),
             "| ------ | ---------- |".to_string(),
             "| Joseph | Developer  |".to_string(),

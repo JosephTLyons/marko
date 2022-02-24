@@ -40,7 +40,7 @@ mod tests {
 
     #[test]
     fn column_width_test() {
-        let rows = vec![
+        let rows = [
             HashMap::from([
                 ("Name".to_string(), "Joseph".to_string()),
                 ("Profession".to_string(), "Developer".to_string()),
@@ -65,7 +65,7 @@ mod tests {
 
     #[test]
     fn column_widths_test() {
-        let rows = vec![
+        let rows = [
             HashMap::from([
                 ("Name".to_string(), "Joseph".to_string()),
                 ("Profession".to_string(), "Developer".to_string()),
