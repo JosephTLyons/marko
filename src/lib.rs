@@ -12,7 +12,7 @@ pub fn italicize(text: &str) -> String {
 }
 
 pub fn strike(text: &str) -> String {
-    decorate_text_with(text, "~")
+    decorate_text_with(text, "~~")
 }
 
 fn decorate_text_with(text: &str, decoration: &str) -> String {
@@ -80,7 +80,7 @@ mod tests {
 
     #[test]
     fn strike_text() {
-        assert_eq!("~Dog~".to_string(), strike("Dog"))
+        assert_eq!("~~Dog~~".to_string(), strike("Dog"))
     }
 
     #[test]
