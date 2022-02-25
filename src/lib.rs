@@ -48,7 +48,7 @@ pub fn create_formatted_markdown_table(
 
     let create_row_string = |row: &Vec<String>| -> String { format!("| {} |", row.join(" | ")) };
 
-    let mut markdown_table_lines = vec![
+    let mut markdown_table = vec![
         create_row_string(&padded_headers),
         create_row_string(&separators),
     ];
@@ -58,10 +58,10 @@ pub fn create_formatted_markdown_table(
             .iter()
             .map(|header| create_padded_value(&row[header], value_pad_map[header]))
             .collect();
-        markdown_table_lines.push(create_row_string(&row_values));
+        markdown_table.push(create_row_string(&row_values));
     }
 
-    markdown_table_lines
+    markdown_table
 }
 
 #[cfg(test)]
