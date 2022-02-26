@@ -156,14 +156,11 @@ mod tests {
 
     #[test]
     fn many_decorations() {
-        let markdown_crate_repo_link = "https://github.com/JosephTLyons/markdown";
+        let text = "Begin building markdown crate";
+        let link = "https://github.com/JosephTLyons/markdown";
         assert_eq!(
-            "Begin building markdown crate"
-                .bold()
-                .italic()
-                .link(markdown_crate_repo_link)
-                .task(true),
-            format!("- [X] [***Make mardown crate***]({markdown_crate_repo_link})",)
+            text.bold().italic().link(link).task(true),
+            format!("- [X] [***{text}***]({link})",)
         )
     }
 
