@@ -82,10 +82,6 @@ pub fn divider() -> &'static str {
 
 // pub fn image() {}
 
-// pub fn create_unorderd_bullet_point_list() {}
-
-// pub fn create_ordered_bullet_point_list() {}
-
 pub fn create_markdown_table(headers: &[&str], rows: &[HashMap<&str, &str>]) -> Vec<String> {
     if headers.is_empty() || rows.is_empty() {
         return Vec::new();
