@@ -8,7 +8,7 @@ pub trait TextMarkup {
     fn bold(&self) -> String;
     fn bullet(&self) -> String;
     fn code(&self) -> String;
-    fn italicize(&self) -> String;
+    fn italic(&self) -> String;
     fn link(&self, link: &str) -> String;
     fn strike(&self) -> String;
     fn task(&self, is_checked: bool) -> String;
@@ -27,7 +27,7 @@ impl TextMarkup for &str {
         decorate_text_with(self, "`")
     }
 
-    fn italicize(&self) -> String {
+    fn italic(&self) -> String {
         decorate_text_with(self, "*")
     }
 
@@ -120,7 +120,7 @@ mod tests {
 
     #[test]
     fn italicize_text() {
-        assert_eq!("Dog".italicize(), "*Dog*",)
+        assert_eq!("Dog".italic(), "*Dog*",)
     }
 
     #[test]
