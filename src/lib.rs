@@ -17,49 +17,50 @@ pub trait TextMarkup {
     fn task(&self, is_checked: bool) -> String;
 }
 
-impl<T: AsRef<str> + fmt::Display> TextMarkup for T {
+impl<T: AsRef<str>> TextMarkup for T {
     fn bold(&self) -> String {
-        decorate_text_with(self, "**")
+        decorate_text_with(self.as_ref(), "**")
     }
 
     fn bullet(&self) -> String {
-        format!("- {}", self)
+        let text = self.as_ref();
+        format!("- {text}")
     }
 
     fn code(&self) -> String {
-        decorate_text_with(self, "`")
+        decorate_text_with(self.as_ref(), "`")
     }
 
     fn header(&self, header_depth: u8) -> String {
         match header_depth {
-            0 => self.to_string(),
+            0 => self.as_ref().to_string(),
             _ => {
                 let header_string = "#".repeat(header_depth.into());
-                format!("{header_string} {self}")
+                format!("{} {}", header_string, self.as_ref())
             }
         }
     }
 
     fn italic(&self) -> String {
-        decorate_text_with(self, "*")
+        decorate_text_with(self.as_ref(), "*")
     }
 
     fn link(&self, link: &str) -> String {
-        format!("[{self}]({link})")
+        format!("[{}]({link})", self.as_ref())
     }
 
     fn strike(&self) -> String {
-        decorate_text_with(self, "~~")
+        decorate_text_with(self.as_ref(), "~~")
     }
 
     fn task(&self, is_complete: bool) -> String {
         let is_complete_symbol = if is_complete { "X" } else { " " };
-        format!("- [{is_complete_symbol}] {self}")
+        format!("- [{is_complete_symbol}] {}", self.as_ref())
     }
 }
 
-fn decorate_text_with<T: AsRef<str> + fmt::Display>(text: T, decoration: &str) -> String {
-    format!("{decoration}{text}{decoration}")
+fn decorate_text_with<T: AsRef<str>>(text: T, decoration: &str) -> String {
+    format!("{decoration}{}{decoration}", text.as_ref())
 }
 
 pub fn divider() -> &'static str {
