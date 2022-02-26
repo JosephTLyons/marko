@@ -158,7 +158,7 @@ mod tests {
     fn many_decorations() {
         let markdown_crate_repo_link = "https://github.com/JosephTLyons/markdown";
         assert_eq!(
-            "Make mardown crate"
+            "Begin building markdown crate"
                 .bold()
                 .italic()
                 .link(markdown_crate_repo_link)
@@ -240,3 +240,4 @@ mod tests {
 // Test names - what is the convention?
 // Reduce clones
 // Convert functions to trait of string, so . can be used?
+// Possibly split table code and tests into its own file
