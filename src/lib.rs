@@ -1,3 +1,5 @@
+use std::fmt;
+
 mod table;
 
 use std::collections::HashMap;
@@ -14,7 +16,7 @@ pub trait TextMarkup {
     fn task(&self, is_checked: bool) -> String;
 }
 
-impl TextMarkup for &str {
+impl<T: AsRef<str> + fmt::Display> TextMarkup for T {
     fn bold(&self) -> String {
         decorate_text_with(self, "**")
     }
@@ -44,7 +46,7 @@ impl TextMarkup for &str {
     }
 }
 
-fn decorate_text_with(text: &str, decoration: &str) -> String {
+fn decorate_text_with<T: AsRef<str> + fmt::Display>(text: T, decoration: &str) -> String {
     format!("{}{}{}", decoration, text, decoration)
 }
 
