@@ -74,27 +74,28 @@ pub fn divider() -> &'static str {
 
 // pub fn create_ordered_bullet_point_list() {}
 
-pub fn create_markdown_table(headers: &[String], rows: &[HashMap<String, String>]) -> Vec<String> {
+pub fn create_markdown_table(headers: &[&str], rows: &[HashMap<&str, &str>]) -> Vec<String> {
     if headers.is_empty() || rows.is_empty() {
         return Vec::new();
     }
 
-    let value_pad_map = Table::from(headers, rows).get_column_widths();
+    let table = Table::from(headers, rows);
+    let value_pad_map = table.get_column_widths();
 
     let create_padded_value =
-        |value: &String, pad_value: usize| -> String { format!("{:01$}", value, pad_value) };
+        |value: &str, pad_value: usize| -> String { format!("{:01$}", value, pad_value) };
 
-    let padded_headers = headers
+    let padded_headers: Vec<_> = headers
         .iter()
         .map(|header| create_padded_value(header, value_pad_map[header]))
         .collect();
 
-    let separators: Vec<String> = headers
+    let separators: Vec<_> = headers
         .iter()
         .map(|header| "-".repeat(value_pad_map[header]))
         .collect();
 
-    let create_row_string = |row: &Vec<String>| -> String { format!("| {} |", row.join(" | ")) };
+    let create_row_string = |row: &[String]| -> String { format!("| {} |", row.join(" | ")) };
 
     let mut markdown_table = vec![
         create_row_string(&padded_headers),
@@ -102,9 +103,9 @@ pub fn create_markdown_table(headers: &[String], rows: &[HashMap<String, String>
     ];
 
     for row in rows {
-        let row_values: Vec<String> = headers
+        let row_values: Vec<_> = headers
             .iter()
-            .map(|header| create_padded_value(&row[header], value_pad_map[header]))
+            .map(|header| create_padded_value(row[header], value_pad_map[header]))
             .collect();
         markdown_table.push(create_row_string(&row_values));
     }
@@ -195,14 +196,8 @@ mod tests {
     #[test]
     fn table_empty_headers() {
         let rows = [
-            HashMap::from([
-                ("Name".to_string(), "Joseph".to_string()),
-                ("Profession".to_string(), "Developer".to_string()),
-            ]),
-            HashMap::from([
-                ("Name".to_string(), "Sam".to_string()),
-                ("Profession".to_string(), "Carpenter".to_string()),
-            ]),
+            HashMap::from([("Name", "Joseph"), ("Profession", "Developer")]),
+            HashMap::from([("Name", "Sam"), ("Profession", "Carpenter")]),
         ];
 
         let headers = [];
@@ -216,7 +211,7 @@ mod tests {
     #[test]
     fn table_empty_rows() {
         let rows = [];
-        let headers = ["Name".to_string(), "Profession".to_string()];
+        let headers = ["Name", "Profession"];
 
         let table_lines = create_markdown_table(&headers, &rows);
         let expected_output: Vec<String> = Vec::new();
@@ -227,17 +222,11 @@ mod tests {
     #[test]
     fn table_with_values() {
         let rows = [
-            HashMap::from([
-                ("Name".to_string(), "Joseph".to_string()),
-                ("Profession".to_string(), "Developer".to_string()),
-            ]),
-            HashMap::from([
-                ("Name".to_string(), "Sam".to_string()),
-                ("Profession".to_string(), "Carpenter".to_string()),
-            ]),
+            HashMap::from([("Name", "Joseph"), ("Profession", "Developer")]),
+            HashMap::from([("Name", "Sam"), ("Profession", "Carpenter")]),
         ];
 
-        let mut headers: Vec<String> = rows.first().unwrap().keys().cloned().collect();
+        let mut headers: Vec<_> = rows.first().unwrap().keys().cloned().collect();
         headers.sort();
 
         let table_lines = create_markdown_table(&headers, &rows);

@@ -2,12 +2,12 @@ use std::cmp;
 use std::collections::HashMap;
 
 pub struct Table<'a> {
-    headers: &'a [String],
-    rows: &'a [HashMap<String, String>],
+    headers: &'a [&'a str],
+    rows: &'a [HashMap<&'a str, &'a str>],
 }
 
 impl<'a> Table<'a> {
-    pub fn from(headers: &'a [String], rows: &'a [HashMap<String, String>]) -> Table<'a> {
+    pub fn from(headers: &'a [&str], rows: &'a [HashMap<&str, &str>]) -> Table<'a> {
         Table { headers, rows }
     }
 
@@ -15,7 +15,7 @@ impl<'a> Table<'a> {
         let width_of_largest_non_header_cell_in_column = self
             .rows
             .iter()
-            .map(|row| row[header].as_str())
+            .map(|row| row[header])
             .max_by_key(|value| value.len())
             .unwrap_or(header)
             .len();
@@ -23,11 +23,11 @@ impl<'a> Table<'a> {
         cmp::max(header.len(), width_of_largest_non_header_cell_in_column)
     }
 
-    pub fn get_column_widths(&self) -> HashMap<String, usize> {
-        let column_widths: HashMap<String, usize> = self
+    pub fn get_column_widths(&self) -> HashMap<&str, usize> {
+        let column_widths: HashMap<&str, usize> = self
             .headers
             .iter()
-            .map(|header| (header.clone(), self.get_column_width(header)))
+            .map(|header| (*header, self.get_column_width(header)))
             .collect();
 
         column_widths
@@ -41,17 +41,11 @@ mod tests {
     #[test]
     fn column_width_test() {
         let rows = [
-            HashMap::from([
-                ("Name".to_string(), "Joseph".to_string()),
-                ("Profession".to_string(), "Developer".to_string()),
-            ]),
-            HashMap::from([
-                ("Name".to_string(), "Sam".to_string()),
-                ("Profession".to_string(), "Carpenter".to_string()),
-            ]),
+            HashMap::from([("Name", "Joseph"), ("Profession", "Developer")]),
+            HashMap::from([("Name", "Sam"), ("Profession", "Carpenter")]),
         ];
 
-        let mut headers: Vec<String> = rows.first().unwrap().keys().cloned().collect();
+        let mut headers: Vec<_> = rows.first().unwrap().keys().cloned().collect();
         headers.sort();
 
         let table = Table::from(&headers, &rows);
@@ -66,17 +60,11 @@ mod tests {
     #[test]
     fn column_widths_test() {
         let rows = [
-            HashMap::from([
-                ("Name".to_string(), "Joseph".to_string()),
-                ("Profession".to_string(), "Developer".to_string()),
-            ]),
-            HashMap::from([
-                ("Name".to_string(), "Sam".to_string()),
-                ("Profession".to_string(), "Carpenter".to_string()),
-            ]),
+            HashMap::from([("Name", "Joseph"), ("Profession", "Developer")]),
+            HashMap::from([("Name", "Sam"), ("Profession", "Carpenter")]),
         ];
 
-        let mut headers: Vec<String> = rows.first().unwrap().keys().cloned().collect();
+        let mut headers: Vec<_> = rows.first().unwrap().keys().cloned().collect();
         headers.sort();
 
         let table = Table::from(&headers, &rows);
