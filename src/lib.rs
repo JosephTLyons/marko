@@ -8,6 +8,7 @@ pub trait Markdown {
     fn bullet(&self) -> String;
     fn code(&self) -> String;
     fn header(&self, level: u8) -> String;
+    fn indent(&self, level: u8) -> String;
     fn italic(&self) -> String;
     fn link(&self, link: &str) -> String;
     fn strike(&self) -> String;
@@ -35,6 +36,17 @@ impl<T: AsRef<str>> Markdown for T {
                 let header_string = "#".repeat(level.into());
                 let text = self.as_ref();
                 format!("{header_string} {text}")
+            }
+        }
+    }
+
+    fn indent(&self, level: u8) -> String {
+        match level {
+            0 => self.as_ref().to_string(),
+            _ => {
+                let indent_string = "    ".repeat(level.into());
+                let text = self.as_ref();
+                format!("{indent_string}{text}")
             }
         }
     }
@@ -140,15 +152,27 @@ mod tests {
     }
 
     #[test]
-    fn header_text_depth_of_zero() {
+    fn header_text_level_zero() {
         let text = "Dog";
         assert_eq!(text.header(0), text)
     }
 
     #[test]
-    fn header_text_depth_of_three() {
+    fn header_text_level_three() {
         let text = "Dog";
         assert_eq!(text.header(3), format!("### {text}"))
+    }
+
+    #[test]
+    fn indent_text_level_zero() {
+        let text = "Dog";
+        assert_eq!(text.indent(0), text)
+    }
+
+    #[test]
+    fn indent_text_level_three() {
+        let text = "Dog";
+        assert_eq!(text.indent(3), format!("            {text}"))
     }
 
     #[test]
