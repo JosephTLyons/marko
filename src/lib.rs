@@ -7,7 +7,7 @@ pub trait Markdown {
     fn bold(&self) -> String;
     fn bullet(&self) -> String;
     fn code(&self) -> String;
-    fn header(&self, header_depth: u8) -> String;
+    fn header(&self, level: u8) -> String;
     fn italic(&self) -> String;
     fn link(&self, link: &str) -> String;
     fn strike(&self) -> String;
@@ -28,11 +28,11 @@ impl<T: AsRef<str>> Markdown for T {
         decorate_text_with(self.as_ref(), "`")
     }
 
-    fn header(&self, header_depth: u8) -> String {
-        match header_depth {
+    fn header(&self, level: u8) -> String {
+        match level {
             0 => self.as_ref().to_string(),
             _ => {
-                let header_string = "#".repeat(header_depth.into());
+                let header_string = "#".repeat(level.into());
                 let text = self.as_ref();
                 format!("{header_string} {text}")
             }
