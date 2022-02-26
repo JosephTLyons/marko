@@ -107,42 +107,52 @@ mod tests {
 
     #[test]
     fn bold_text() {
-        assert_eq!("Dog".bold(), "**Dog**")
+        let text = "Dog";
+        assert_eq!(text.bold(), format!("**{text}**"))
     }
 
     #[test]
     fn bullet_text() {
-        assert_eq!("Dog".bullet(), "- Dog")
+        let text = "Dog";
+        assert_eq!(text.bullet(), format!("- {text}"))
     }
 
     #[test]
     fn code_text() {
-        assert_eq!("Dog".code(), "`Dog`")
+        let text = "Dog";
+        assert_eq!(text.code(), format!("`{text}`"))
     }
 
     #[test]
     fn italicize_text() {
-        assert_eq!("Dog".italic(), "*Dog*")
+        let text = "Dog";
+        assert_eq!(text.italic(), format!("*{text}*"))
     }
 
     #[test]
     fn link_text() {
-        assert_eq!("Dog".link("www.apple.com"), "[Dog](www.apple.com)")
+        let text = "Apple";
+        let link = "www.apple.com";
+        assert_eq!(text.link(link), format!("[{text}]({link})"))
     }
 
     #[test]
     fn strike_text() {
-        assert_eq!("Dog".strike(), "~~Dog~~")
+        let text = "Dog";
+        assert_eq!(text.strike(), format!("~~{text}~~"))
     }
 
     #[test]
     fn task_complete() {
-        assert_eq!("Finish refactor".task(true), "- [X] Finish refactor")
+        let text = "Finish refactor";
+        assert_eq!(text.task(true), format!("- [X] {text}"))
     }
 
     #[test]
     fn task_not_complete() {
-        assert_eq!("Finish refactor".task(false), "- [ ] Finish refactor")
+        let text = "Finish refactor";
+        assert_eq!(text.task(false), format!("- [ ] {text}"))
+    }
     }
 
     #[test]
