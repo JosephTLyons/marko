@@ -153,6 +153,18 @@ mod tests {
         let text = "Finish refactor";
         assert_eq!(text.task(false), format!("- [ ] {text}"))
     }
+
+    #[test]
+    fn many_decorations() {
+        let markdown_crate_repo_link = "https://github.com/JosephTLyons/markdown";
+        assert_eq!(
+            "Make mardown crate"
+                .bold()
+                .italic()
+                .link(markdown_crate_repo_link)
+                .task(true),
+            format!("- [X] [***Make mardown crate***]({markdown_crate_repo_link})",)
+        )
     }
 
     #[test]
