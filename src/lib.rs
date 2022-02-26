@@ -3,8 +3,7 @@ mod table;
 use std::collections::HashMap;
 use table::Table;
 
-// TODO - rename this trait
-pub trait TextMarkup {
+pub trait Markdown {
     fn bold(&self) -> String;
     fn bullet(&self) -> String;
     fn code(&self) -> String;
@@ -15,7 +14,7 @@ pub trait TextMarkup {
     fn task(&self, is_checked: bool) -> String;
 }
 
-impl<T: AsRef<str>> TextMarkup for T {
+impl<T: AsRef<str>> Markdown for T {
     fn bold(&self) -> String {
         decorate_text_with(self.as_ref(), "**")
     }
