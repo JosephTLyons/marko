@@ -34,7 +34,8 @@ impl<T: AsRef<str>> TextMarkup for T {
             0 => self.as_ref().to_string(),
             _ => {
                 let header_string = "#".repeat(header_depth.into());
-                format!("{} {}", header_string, self.as_ref())
+                let text = self.as_ref();
+                format!("{header_string} {text}")
             }
         }
     }
@@ -44,7 +45,8 @@ impl<T: AsRef<str>> TextMarkup for T {
     }
 
     fn link(&self, link: &str) -> String {
-        format!("[{}]({link})", self.as_ref())
+        let text = self.as_ref();
+        format!("[{text}]({link})")
     }
 
     fn strike(&self) -> String {
@@ -53,12 +55,14 @@ impl<T: AsRef<str>> TextMarkup for T {
 
     fn task(&self, is_complete: bool) -> String {
         let is_complete_symbol = if is_complete { "X" } else { " " };
-        format!("- [{is_complete_symbol}] {}", self.as_ref())
+        let text = self.as_ref();
+        format!("- [{is_complete_symbol}] {text}")
     }
 }
 
 fn decorate_text_with<T: AsRef<str>>(text: T, decoration: &str) -> String {
-    format!("{decoration}{}{decoration}", text.as_ref())
+    let text = text.as_ref();
+    format!("{decoration}{text}{decoration}")
 }
 
 pub fn divider() -> &'static str {
