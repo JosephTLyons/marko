@@ -149,7 +149,7 @@ mod tests {
     }
 
     #[test]
-    fn empty_headers() {
+    fn table_empty_headers() {
         let rows = [
             HashMap::from([
                 ("Name".to_string(), "Joseph".to_string()),
@@ -170,7 +170,7 @@ mod tests {
     }
 
     #[test]
-    fn empty_rows() {
+    fn table_empty_rows() {
         let rows = [];
         let headers = ["Name".to_string(), "Profession".to_string()];
 
@@ -181,7 +181,7 @@ mod tests {
     }
 
     #[test]
-    fn non_empty_table_test() {
+    fn table_with_values() {
         let rows = [
             HashMap::from([
                 ("Name".to_string(), "Joseph".to_string()),
