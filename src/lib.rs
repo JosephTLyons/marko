@@ -1,5 +1,3 @@
-use std::fmt;
-
 mod table;
 
 use std::collections::HashMap;
