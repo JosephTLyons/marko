@@ -1,11 +1,11 @@
 [package]
-name = "markdown"
+name = "marko"
 version = "0.1.0"
 authors = ["Joseph T Lyons <JosephTLyons@gmail.com>"]
 edition = "2021"
 description = "Programmtically format text with Markdown syntax"
 license = "GPL-3.0-only"
-repository = "https://github.com/JosephTLyons/markdown"
+repository = "https://github.com/JosephTLyons/marko"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
