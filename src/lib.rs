@@ -45,7 +45,7 @@ impl<T: AsRef<str> + fmt::Display> TextMarkup for T {
     }
 
     fn link(&self, link: &str) -> String {
-        format!("[{}]({})", self, link)
+        format!("[{self}]({link})")
     }
 
     fn strike(&self) -> String {
@@ -53,12 +53,13 @@ impl<T: AsRef<str> + fmt::Display> TextMarkup for T {
     }
 
     fn task(&self, is_complete: bool) -> String {
-        format!("- [{}] {}", if is_complete { "X" } else { " " }, self)
+        let is_complete_symbol = if is_complete { "X" } else { " " };
+        format!("- [{is_complete_symbol}] {self}")
     }
 }
 
 fn decorate_text_with<T: AsRef<str> + fmt::Display>(text: T, decoration: &str) -> String {
-    format!("{}{}{}", decoration, text, decoration)
+    format!("{decoration}{text}{decoration}")
 }
 
 pub fn divider() -> &'static str {
