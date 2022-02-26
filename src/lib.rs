@@ -3,16 +3,45 @@ mod table;
 use std::collections::HashMap;
 use table::Table;
 
-pub fn bold(text: &str) -> String {
-    decorate_text_with(text, "**")
+// TODO - rename this trait
+pub trait TextMarkup {
+    fn bold(&self) -> String;
+    fn bullet(&self) -> String;
+    fn code(&self) -> String;
+    fn italicize(&self) -> String;
+    fn link(&self, link: &str) -> String;
+    fn strike(&self) -> String;
+    fn task(&self, is_checked: bool) -> String;
 }
 
-pub fn italicize(text: &str) -> String {
-    decorate_text_with(text, "*")
-}
+impl TextMarkup for &str {
+    fn bold(&self) -> String {
+        decorate_text_with(self, "**")
+    }
 
-pub fn strike(text: &str) -> String {
-    decorate_text_with(text, "~~")
+    fn bullet(&self) -> String {
+        format!("- {}", self)
+    }
+
+    fn code(&self) -> String {
+        decorate_text_with(self, "`")
+    }
+
+    fn italicize(&self) -> String {
+        decorate_text_with(self, "*")
+    }
+
+    fn link(&self, link: &str) -> String {
+        format!("[{}]({})", self, link)
+    }
+
+    fn strike(&self) -> String {
+        decorate_text_with(self, "~~")
+    }
+
+    fn task(&self, is_complete: bool) -> String {
+        format!("- [{}] {}", if is_complete { "X" } else { " " }, self)
+    }
 }
 
 fn decorate_text_with(text: &str, decoration: &str) -> String {
@@ -22,6 +51,12 @@ fn decorate_text_with(text: &str, decoration: &str) -> String {
 pub fn divider() -> &'static str {
     "---"
 }
+
+// pub fn image() {}
+
+// pub fn create_unorderd_bullet_point_list() {}
+
+// pub fn create_ordered_bullet_point_list() {}
 
 pub fn create_formatted_markdown_table(
     headers: &[String],
@@ -70,17 +105,42 @@ mod tests {
 
     #[test]
     fn bold_text() {
-        assert_eq!("**Dog**".to_string(), bold("Dog"))
+        assert_eq!("Dog".bold(), "**Dog**",)
+    }
+
+    #[test]
+    fn bullet_text() {
+        assert_eq!("Dog".bullet(), "- Dog",)
+    }
+
+    #[test]
+    fn code_text() {
+        assert_eq!("Dog".code(), "`Dog`",)
     }
 
     #[test]
     fn italicize_text() {
-        assert_eq!("*Dog*".to_string(), italicize("Dog"))
+        assert_eq!("Dog".italicize(), "*Dog*",)
+    }
+
+    #[test]
+    fn link_text() {
+        assert_eq!("Dog".link("www.apple.com"), "[Dog](www.apple.com)",)
     }
 
     #[test]
     fn strike_text() {
-        assert_eq!("~~Dog~~".to_string(), strike("Dog"))
+        assert_eq!("Dog".strike(), "~~Dog~~",)
+    }
+
+    #[test]
+    fn task_complete() {
+        assert_eq!("Finish refactor".task(true), "- [X] Finish refactor",)
+    }
+
+    #[test]
+    fn task_not_complete() {
+        assert_eq!("Finish refactor".task(false), "- [ ] Finish refactor",)
     }
 
     #[test]
