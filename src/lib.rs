@@ -215,12 +215,21 @@ mod tests {
     }
 
     #[test]
-    fn many_decorations() {
+    fn multiple_decorations_1() {
         let text = "Begin building markdown crate";
         let link = "https://github.com/JosephTLyons/marko";
         assert_eq!(
             text.bold().italic().link(link).task(true),
             format!("- [X] [***{text}***]({link})",)
+        )
+    }
+
+    #[test]
+    fn multiple_decorations_2() {
+        let text = "Begin building markdown crate";
+        assert_eq!(
+            text.italic().header(3),
+            format!("### *{text}*")
         )
     }
 
