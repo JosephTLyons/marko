@@ -11,6 +11,7 @@ pub trait Markdown {
     fn indent(&self, level: u8) -> String;
     fn italic(&self) -> String;
     fn link(&self, link: &str) -> String;
+    fn quote(&self) -> String;
     fn strike(&self) -> String;
     fn task(&self, is_complete: bool) -> String;
 }
@@ -58,6 +59,11 @@ impl<T: AsRef<str>> Markdown for T {
     fn link(&self, link: &str) -> String {
         let text = self.as_ref();
         format!("[{text}]({link})")
+    }
+
+    fn quote(&self) -> String {
+        let text = self.as_ref();
+        format!("> {text}")
     }
 
     fn strike(&self) -> String {
@@ -182,6 +188,12 @@ mod tests {
         let text = "Apple";
         let link = "www.apple.com";
         assert_eq!(text.link(link), format!("[{text}]({link})"))
+    }
+
+    #[test]
+    fn quote_text() {
+        let text = "Not all those who wander are lost";
+        assert_eq!(text.quote(), format!("> {text}"))
     }
 
     #[test]
