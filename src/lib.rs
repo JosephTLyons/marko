@@ -80,10 +80,8 @@ pub fn create_markdown_table(headers: &[&str], rows: &[HashMap<&str, &str>]) -> 
     }
 
     let table = Table::from(headers, rows);
-    let value_pad_map = table.get_column_widths();
 
-    let create_padded_value =
-        |value: &str, pad_value: usize| -> String { format!("{:01$}", value, pad_value) };
+    let value_pad_map = table.get_column_widths();
 
     let padded_headers: Vec<_> = headers
         .iter()
@@ -94,8 +92,6 @@ pub fn create_markdown_table(headers: &[&str], rows: &[HashMap<&str, &str>]) -> 
         .iter()
         .map(|header| "-".repeat(value_pad_map[header]))
         .collect();
-
-    let create_row_string = |row: &[String]| -> String { format!("| {} |", row.join(" | ")) };
 
     let mut markdown_table = vec![
         create_row_string(&padded_headers),
@@ -111,6 +107,14 @@ pub fn create_markdown_table(headers: &[&str], rows: &[HashMap<&str, &str>]) -> 
     }
 
     markdown_table
+}
+
+fn create_padded_value(value: &str, pad_value: usize) -> String {
+    format!("{:01$}", value, pad_value)
+}
+
+fn create_row_string(row: &[String]) -> String {
+    format!("| {} |", row.join(" | "))
 }
 
 #[cfg(test)]
