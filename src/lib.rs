@@ -210,11 +210,8 @@ mod tests {
 }
 
 // TODO
-// Better logic
-// Only keep one function or both?
+// Better logic for markdown table?
 // Test for rows not matching headers
-// Other markdown functions?
-// Clean table function
 // Replace all HashMap []s with .get()
 // Test names - what is the convention?
 // Reduce clones
