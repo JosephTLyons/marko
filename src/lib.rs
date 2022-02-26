@@ -105,42 +105,42 @@ mod tests {
 
     #[test]
     fn bold_text() {
-        assert_eq!("Dog".bold(), "**Dog**",)
+        assert_eq!("Dog".bold(), "**Dog**")
     }
 
     #[test]
     fn bullet_text() {
-        assert_eq!("Dog".bullet(), "- Dog",)
+        assert_eq!("Dog".bullet(), "- Dog")
     }
 
     #[test]
     fn code_text() {
-        assert_eq!("Dog".code(), "`Dog`",)
+        assert_eq!("Dog".code(), "`Dog`")
     }
 
     #[test]
     fn italicize_text() {
-        assert_eq!("Dog".italic(), "*Dog*",)
+        assert_eq!("Dog".italic(), "*Dog*")
     }
 
     #[test]
     fn link_text() {
-        assert_eq!("Dog".link("www.apple.com"), "[Dog](www.apple.com)",)
+        assert_eq!("Dog".link("www.apple.com"), "[Dog](www.apple.com)")
     }
 
     #[test]
     fn strike_text() {
-        assert_eq!("Dog".strike(), "~~Dog~~",)
+        assert_eq!("Dog".strike(), "~~Dog~~")
     }
 
     #[test]
     fn task_complete() {
-        assert_eq!("Finish refactor".task(true), "- [X] Finish refactor",)
+        assert_eq!("Finish refactor".task(true), "- [X] Finish refactor")
     }
 
     #[test]
     fn task_not_complete() {
-        assert_eq!("Finish refactor".task(false), "- [ ] Finish refactor",)
+        assert_eq!("Finish refactor".task(false), "- [ ] Finish refactor")
     }
 
     #[test]
