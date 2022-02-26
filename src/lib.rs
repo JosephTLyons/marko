@@ -10,6 +10,7 @@ pub trait TextMarkup {
     fn bold(&self) -> String;
     fn bullet(&self) -> String;
     fn code(&self) -> String;
+    fn header(&self, header_depth: u8) -> String;
     fn italic(&self) -> String;
     fn link(&self, link: &str) -> String;
     fn strike(&self) -> String;
@@ -27,6 +28,16 @@ impl<T: AsRef<str> + fmt::Display> TextMarkup for T {
 
     fn code(&self) -> String {
         decorate_text_with(self, "`")
+    }
+
+    fn header(&self, header_depth: u8) -> String {
+        match header_depth {
+            0 => self.to_string(),
+            _ => {
+                let header_string = "#".repeat(header_depth.into());
+                format!("{header_string} {self}")
+            }
+        }
     }
 
     fn italic(&self) -> String {
@@ -121,6 +132,18 @@ mod tests {
     fn code_text() {
         let text = "Dog";
         assert_eq!(text.code(), format!("`{text}`"))
+    }
+
+    #[test]
+    fn header_text_depth_of_zero() {
+        let text = "Dog";
+        assert_eq!(text.header(0), text)
+    }
+
+    #[test]
+    fn header_text_depth_of_three() {
+        let text = "Dog";
+        assert_eq!(text.header(3), format!("### {text}"))
     }
 
     #[test]
