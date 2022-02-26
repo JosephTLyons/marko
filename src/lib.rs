@@ -74,10 +74,7 @@ pub fn divider() -> &'static str {
 
 // pub fn create_ordered_bullet_point_list() {}
 
-pub fn create_formatted_markdown_table(
-    headers: &[String],
-    rows: &[HashMap<String, String>],
-) -> Vec<String> {
+pub fn create_markdown_table(headers: &[String], rows: &[HashMap<String, String>]) -> Vec<String> {
     if headers.is_empty() || rows.is_empty() {
         return Vec::new();
     }
@@ -210,7 +207,7 @@ mod tests {
 
         let headers = [];
 
-        let table_lines = create_formatted_markdown_table(&headers, &rows);
+        let table_lines = create_markdown_table(&headers, &rows);
         let expected_output: Vec<String> = Vec::new();
 
         assert_eq!(table_lines, expected_output)
@@ -221,7 +218,7 @@ mod tests {
         let rows = [];
         let headers = ["Name".to_string(), "Profession".to_string()];
 
-        let table_lines = create_formatted_markdown_table(&headers, &rows);
+        let table_lines = create_markdown_table(&headers, &rows);
         let expected_output: Vec<String> = Vec::new();
 
         assert_eq!(table_lines, expected_output)
@@ -243,7 +240,7 @@ mod tests {
         let mut headers: Vec<String> = rows.first().unwrap().keys().cloned().collect();
         headers.sort();
 
-        let table_lines = create_formatted_markdown_table(&headers, &rows);
+        let table_lines = create_markdown_table(&headers, &rows);
 
         let expected_output = [
             "| Name   | Profession |".to_string(),
