@@ -295,3 +295,7 @@ mod tests {
 // Reduce clones
 // Convert functions to trait of string, so . can be used?
 // Possibly split table code and tests into its own file
+// Numbered bullet point decoration
+// Refactor non-pub decoration functions
+// Test and make sure all code renders into markdown correctly
+// Update changelog
