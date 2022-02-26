@@ -11,7 +11,7 @@ pub trait Markdown {
     fn italic(&self) -> String;
     fn link(&self, link: &str) -> String;
     fn strike(&self) -> String;
-    fn task(&self, is_checked: bool) -> String;
+    fn task(&self, is_complete: bool) -> String;
 }
 
 impl<T: AsRef<str>> Markdown for T {
