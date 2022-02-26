@@ -299,3 +299,5 @@ mod tests {
 // Refactor non-pub decoration functions
 // Test and make sure all code renders into markdown correctly
 // Update changelog
+
+// https://wordpress.com/support/markdown-quick-reference/
