@@ -3,7 +3,7 @@
 Programmtically format text with [Markdown](https://en.wikipedia.org/wiki/Markdown) syntax, with [marko](https://crates.io/crates/marko)!
 
 ```rust
-use marko::{create_markdown_table, divider, Markdown};
+use marko::{self, Markdown};
 use std::collections::HashMap;
 
 fn main() {
@@ -16,7 +16,7 @@ fn main() {
 
     // - [ ] [**Finish marko**](https://github.com/JosephTLyons/marko)
 
-    println!("{}", divider());
+    println!("{}", marko::divider());
 
     // ---
 
@@ -50,7 +50,7 @@ fn main() {
     let mut headers: Vec<_> = rows.first().unwrap().keys().cloned().collect();
     headers.sort();
 
-    for row in create_markdown_table(&headers, &rows) {
+    for row in marko::create_markdown_table(&headers, &rows) {
         println!("{row}");
     }
 
