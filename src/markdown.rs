@@ -77,9 +77,7 @@ fn decorate_text_with<T: AsRef<str>>(text: T, decoration: &str) -> String {
     format!("{decoration}{text}{decoration}")
 }
 
-pub fn divider() -> &'static str {
-    "---"
-}
+pub const DIVIDER: &str = "---";
 
 // pub fn image() {}
 
@@ -184,6 +182,6 @@ mod tests {
 
     #[test]
     fn divider_test() {
-        assert_eq!("---", divider())
+        assert_eq!(DIVIDER, "---")
     }
 }

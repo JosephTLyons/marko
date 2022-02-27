@@ -1,8 +1,8 @@
 mod markdown;
 mod markdown_table;
 
-pub use markdown::divider;
 pub use markdown::Markdown;
+pub use markdown::DIVIDER;
 pub use markdown_table::create_markdown_table;
 
 // TODO
