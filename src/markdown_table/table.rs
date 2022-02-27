@@ -12,25 +12,22 @@ impl<'a> Table<'a> {
     }
 
     pub fn get_column_width(&self, header: &str) -> usize {
-        let width_of_largest_non_header_cell_in_column = self
-            .rows
-            .iter()
-            .map(|row| row[header])
-            .max_by_key(|value| value.len())
-            .unwrap_or(header)
-            .len();
-
-        cmp::max(header.len(), width_of_largest_non_header_cell_in_column)
+        cmp::max(
+            header.len(),
+            self.rows
+                .iter()
+                .map(|row| row[header])
+                .max_by_key(|value| value.len())
+                .unwrap_or(header)
+                .len(),
+        )
     }
 
     pub fn get_column_widths(&self) -> HashMap<&str, usize> {
-        let column_widths: HashMap<&str, usize> = self
-            .headers
+        self.headers
             .iter()
             .map(|header| (*header, self.get_column_width(header)))
-            .collect();
-
-        column_widths
+            .collect::<HashMap<_, _>>()
     }
 }
 
