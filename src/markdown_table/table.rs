@@ -27,7 +27,7 @@ impl<'a> Table<'a> {
         self.headers
             .iter()
             .map(|header| (*header, self.get_column_width(header)))
-            .collect::<HashMap<_, _>>()
+            .collect()
     }
 }
 
