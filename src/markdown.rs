@@ -168,7 +168,7 @@ mod tests {
 
     #[test]
     fn multiple_decorations_1() {
-        let text = "Begin building markdown crate";
+        let text = "Begin building marko crate";
         let link = "https://github.com/JosephTLyons/marko";
         assert_eq!(
             text.bold().italic().link(link).task(true),
@@ -178,7 +178,7 @@ mod tests {
 
     #[test]
     fn multiple_decorations_2() {
-        let text = "Begin building markdown crate";
+        let text = "The worst of times...";
         assert_eq!(text.italic().header(3), format!("### *{text}*"))
     }
 
