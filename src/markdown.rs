@@ -179,10 +179,7 @@ mod tests {
     #[test]
     fn multiple_decorations_2() {
         let text = "Begin building markdown crate";
-        assert_eq!(
-            text.italic().header(3),
-            format!("### *{text}*")
-        )
+        assert_eq!(text.italic().header(3), format!("### *{text}*"))
     }
 
     #[test]

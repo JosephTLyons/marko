@@ -1,9 +1,9 @@
-mod markdown_table;
 mod markdown;
+mod markdown_table;
 
-pub use markdown_table::create_markdown_table;
-pub use markdown::Markdown;
 pub use markdown::divider;
+pub use markdown::Markdown;
+pub use markdown_table::create_markdown_table;
 
 // TODO
 // Better logic for markdown table?
