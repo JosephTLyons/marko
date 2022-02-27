@@ -32,6 +32,7 @@ pub fn create_markdown_table(headers: &[&str], rows: &[HashMap<&str, &str>]) -> 
             .iter()
             .map(|header| create_padded_value(row[header], value_pad_map[header]))
             .collect();
+
         markdown_table.push(create_row_string(&row_values));
     }
 
