@@ -16,7 +16,7 @@ fn main() {
 
     // - [ ] [**Finish marko**](https://github.com/JosephTLyons/marko)
 
-    println!("{}", marko::divider());
+    println!("{}", marko::DIVIDER);
 
     // ---
 
