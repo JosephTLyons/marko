@@ -3,6 +3,7 @@ pub trait Markdown {
     fn bullet(&self) -> String;
     fn code(&self) -> String;
     fn header(&self, level: u8) -> String;
+    fn image(&self, path: &str) -> String;
     fn indent(&self, level: u8) -> String;
     fn italic(&self) -> String;
     fn link(&self, link: &str) -> String;
@@ -34,6 +35,11 @@ impl<T: AsRef<str>> Markdown for T {
                 format!("{header_string} {text}")
             }
         }
+    }
+
+    fn image(&self, path: &str) -> String {
+        let text = self.as_ref();
+        format!("![{text}]({path})")
     }
 
     fn indent(&self, level: u8) -> String {
@@ -79,8 +85,6 @@ fn decorate_text_with<T: AsRef<str>>(text: T, decoration: &str) -> String {
 
 pub const DIVIDER: &str = "---";
 
-// pub fn image() {}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -113,6 +117,13 @@ mod tests {
     fn header_text_level_three() {
         let text = "Dog";
         assert_eq!(text.header(3), format!("### {text}"))
+    }
+
+    #[test]
+    fn image_test() {
+        let text = "Dog";
+        let path = "/path/to/dog_image.png";
+        assert_eq!(text.image(path), format!("![{text}]({path})"))
     }
 
     #[test]
