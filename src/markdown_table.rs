@@ -3,7 +3,17 @@ use table::Table;
 
 use std::collections::HashMap;
 
-pub fn create_markdown_table(headers: &[&str], rows: &[HashMap<&str, &str>]) -> Vec<String> {
+pub enum ColumnAlignment {
+    Left,
+    Center,
+    Right,
+}
+
+pub fn create_markdown_table<'a>(
+    headers: &[&str],
+    rows: &'a [HashMap<&str, &str>],
+    column_alignment_map_option: &Option<HashMap<&'a str, Option<ColumnAlignment>>>,
+) -> Vec<String> {
     if headers.is_empty() || rows.is_empty() {
         return Vec::new();
     }
@@ -19,7 +29,19 @@ pub fn create_markdown_table(headers: &[&str], rows: &[HashMap<&str, &str>]) -> 
 
     let separators: Vec<_> = headers
         .iter()
-        .map(|header| "-".repeat(value_pad_map[header]))
+        .map(|header| {
+            let pad_value = value_pad_map[header];
+
+            match &column_alignment_map_option {
+                Some(column_alignment_map) => match &column_alignment_map[header] {
+                    Some(ColumnAlignment::Left) => format!(":{}", "-".repeat(pad_value - 1)),
+                    Some(ColumnAlignment::Center) => format!(":{}:", "-".repeat(pad_value - 2)),
+                    Some(ColumnAlignment::Right) => format!("{}:", "-".repeat(pad_value - 1)),
+                    None => "-".repeat(pad_value),
+                },
+                None => "-".repeat(pad_value),
+            }
+        })
         .collect();
 
     let mut markdown_table = vec![
@@ -60,7 +82,7 @@ mod tests {
 
         let headers = [];
 
-        let table_lines = create_markdown_table(&headers, &rows);
+        let table_lines = create_markdown_table(&headers, &rows, &None);
         let expected_output: Vec<String> = Vec::new();
 
         assert_eq!(table_lines, expected_output)
@@ -71,7 +93,7 @@ mod tests {
         let rows = [];
         let headers = ["Name", "Profession"];
 
-        let table_lines = create_markdown_table(&headers, &rows);
+        let table_lines = create_markdown_table(&headers, &rows, &None);
         let expected_output: Vec<String> = Vec::new();
 
         assert_eq!(table_lines, expected_output)
@@ -79,21 +101,52 @@ mod tests {
 
     #[test]
     fn table_with_values() {
+        let headers = ["Name", "Age", "Profession", "State"];
+
         let rows = [
-            HashMap::from([("Name", "Joseph"), ("Profession", "Developer")]),
-            HashMap::from([("Name", "Sam"), ("Profession", "Carpenter")]),
+            HashMap::from([
+                ("Name", "Joseph"),
+                ("Age", "31"),
+                ("Profession", "Developer"),
+                ("State", "Indiana"),
+            ]),
+            HashMap::from([
+                ("Name", "Sam"),
+                ("Age", "31"),
+                ("Profession", "Carpenter"),
+                ("State", "Arizona"),
+            ]),
+            HashMap::from([
+                ("Name", "Seth"),
+                ("Age", "31"),
+                ("Profession", "Fabricator"),
+                ("State", "Ohio"),
+            ]),
+            HashMap::from([
+                ("Name", "Danny"),
+                ("Age", "31"),
+                ("Profession", "Guitarist"),
+                ("State", "Indiana"),
+            ]),
         ];
 
-        let mut headers: Vec<_> = rows.first().unwrap().keys().cloned().collect();
-        headers.sort();
+        let column_alignment_map_option = HashMap::from([
+            ("Name", None),
+            ("Age", Some(ColumnAlignment::Left)),
+            ("Profession", Some(ColumnAlignment::Center)),
+            ("State", Some(ColumnAlignment::Right)),
+        ]);
 
-        let table_lines = create_markdown_table(&headers, &rows);
+        let table_lines =
+            create_markdown_table(&headers, &rows, &Some(column_alignment_map_option));
 
         let expected_output = [
-            "| Name   | Profession |".to_string(),
-            "| ------ | ---------- |".to_string(),
-            "| Joseph | Developer  |".to_string(),
-            "| Sam    | Carpenter  |".to_string(),
+            "| Name   | Age | Profession | State   |",
+            "| ------ | :-- | :--------: | ------: |",
+            "| Joseph | 31  | Developer  | Indiana |",
+            "| Sam    | 31  | Carpenter  | Arizona |",
+            "| Seth   | 31  | Fabricator | Ohio    |",
+            "| Danny  | 31  | Guitarist  | Indiana |",
         ];
 
         assert_eq!(table_lines, expected_output);
