@@ -90,10 +90,10 @@ mod tests {
         let table_lines = create_markdown_table(&headers, &rows);
 
         let expected_output = [
-            "| Name   | Profession |".to_string(),
-            "| ------ | ---------- |".to_string(),
-            "| Joseph | Developer  |".to_string(),
-            "| Sam    | Carpenter  |".to_string(),
+            "| Name   | Profession |",
+            "| ------ | ---------- |",
+            "| Joseph | Developer  |",
+            "| Sam    | Carpenter  |",
         ];
 
         assert_eq!(table_lines, expected_output);
