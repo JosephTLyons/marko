@@ -14,7 +14,8 @@ pub trait Markdown {
 
 impl<T: AsRef<str>> Markdown for T {
     fn bold(&self) -> String {
-        decorate_text_with(self.as_ref(), "**")
+        let text = self.as_ref();
+        format!("**{text}**")
     }
 
     fn bullet(&self) -> String {
@@ -23,7 +24,8 @@ impl<T: AsRef<str>> Markdown for T {
     }
 
     fn code(&self) -> String {
-        decorate_text_with(self.as_ref(), "`")
+        let text = self.as_ref();
+        format!("`{text}`")
     }
 
     fn header(&self, level: u8) -> String {
@@ -54,7 +56,8 @@ impl<T: AsRef<str>> Markdown for T {
     }
 
     fn italic(&self) -> String {
-        decorate_text_with(self.as_ref(), "*")
+        let text = self.as_ref();
+        format!("*{text}*")
     }
 
     fn link(&self, link: &str) -> String {
@@ -68,7 +71,8 @@ impl<T: AsRef<str>> Markdown for T {
     }
 
     fn strike(&self) -> String {
-        decorate_text_with(self.as_ref(), "~~")
+        let text = self.as_ref();
+        format!("~~{text}~~")
     }
 
     fn task(&self, is_complete: bool) -> String {
@@ -76,11 +80,6 @@ impl<T: AsRef<str>> Markdown for T {
         let text = self.as_ref();
         format!("- [{is_complete_symbol}] {text}")
     }
-}
-
-fn decorate_text_with<T: AsRef<str>>(text: T, decoration: &str) -> String {
-    let text = text.as_ref();
-    format!("{decoration}{text}{decoration}")
 }
 
 pub const DIVIDER: &str = "---";
